@@ -31,7 +31,7 @@ jobs:
       #   run: mvn -f ./backend/pom.xml clean install
       
       - name: Build and test with Maven and SonarCloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-2024 -Dsonar.organization=devops-school -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN}} -f ./backend/pom.xml
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=Setsuna8522_devops -Dsonar.organization=setsuna8522 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN}} -f ./backend/pom.xml
 
   build-and-push-docker-image:
     needs: test-backend # définit les dépendances, on publie les images Docker après que les tests sont passés
