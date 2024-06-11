@@ -129,6 +129,13 @@ Voir `./.github/workflows/main.yml`.
 
 
 ## Continuous Delivery
+Voir `./.github/workflows/main.yml`.
 
 
 ## Quality Gate
+- Configuration
+    - bug : pas d'ajout de nouveaux bugs
+    - sécurité : pas de nouvelles vulnérabilités
+    - maintenabilités : quantité limité de dette technique
+    - couverture : les tests couvrent 80% du code
+    - duplication : moins de 3% de lignes dupliquées
