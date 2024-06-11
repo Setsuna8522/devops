@@ -1,4 +1,4 @@
-name: devops-CI/CD
+name: build-and-push-docker-image
 
 on:
   workflow_run:
