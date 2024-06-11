@@ -129,4 +129,3 @@ Voir `./.github/workflows/main.yml`.
 
 
 ## Continuous Delivery
-test
