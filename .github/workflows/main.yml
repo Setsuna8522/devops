@@ -1,4 +1,4 @@
-name: devops-CI/CD
+name: full devops-CI/CD
 
 on: # lancement des tests à chaque push/pull sur les branches main et develop
   push:
