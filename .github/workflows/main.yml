@@ -38,21 +38,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2.5.0
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{secrets.DOCKER_USERNAME}}
-          password: ${{secrets.DOCKER_PASSWORD}}
+      - name: Login to DockerHub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Build and push backend image
         if: github.ref=='refs/heads/main'
         uses: docker/build-push-action@v3
         with:
           context: ./backend
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/backend:latest
+          tags: ${{secrets.DOCKER_USERNAME}}/backend:latest
           push: true
 
       - name: Build and push database image
@@ -60,7 +54,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./database
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/database:latest
+          tags: ${{secrets.DOCKER_USERNAME}}/database:latest
           push: true
 
       - name: Build and push httpd image
@@ -68,5 +62,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./httpd
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/httpd:latest
+          tags: ${{secrets.DOCKER_USERNAME}}/httpd:latest
           push: true
