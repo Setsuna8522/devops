@@ -1,5 +1,7 @@
+# Compilation et publication des images Docker
 name: build-and-push-docker-image
 
+# Le script ne se lance qu'après que le workflow "test-backend" soit fini
 on:
   workflow_run:
     workflows: ["test-backend"]
@@ -8,32 +10,40 @@ on:
 
 # Définition des tests à faire
 jobs:
+  # Compilation et publication des images Docker que sur la branche main
   build-and-push-docker-image:
     if: github.ref=='refs/heads/main'
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu-22.04 # les tests se lancent sur une machine virtuelle ubuntu
     steps:
+      # Clone du code sur le runner pour le compiler et le tester
       - name: Checkout code
         uses: actions/checkout@v2.5.0
 
+      # Connexion au DockerHub
       - name: Login to DockerHub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
+      # Compilation et publication de l'image backend que sur la branche main
       - name: Build and push backend image
+        if: github.ref=='refs/heads/main'
         uses: docker/build-push-action@v3
         with:
           context: ./backend
           tags: ${{secrets.DOCKER_USERNAME}}/backend:latest
           push: true
 
+      # Compilation et publication de l'image database que sur la branche main
       - name: Build and push database image
+        if: github.ref=='refs/heads/main'
         uses: docker/build-push-action@v3
         with:
           context: ./database
           tags: ${{secrets.DOCKER_USERNAME}}/database:latest
           push: true
 
+      # Compilation et publication de l'image httpd que sur la branche main
       - name: Build and push httpd image
+        if: github.ref=='refs/heads/main'
         uses: docker/build-push-action@v3
         with:
           context: ./httpd

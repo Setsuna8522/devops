@@ -129,7 +129,7 @@ Voir `./.github/workflows/main.yml`.
 
 
 ## Continuous Delivery
-Voir `./.github/workflows/main.yml`.
+Voir `./.github/workflows/master-develop.yml` et `./.github/workflows/only-master.yml`.
 
 
 ## Quality Gate
