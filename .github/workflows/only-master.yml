@@ -1,0 +1,41 @@
+name: devops-CI/CD
+
+on:
+  workflow_run:
+    workflows: ["test-backend"]
+    types:
+      - completed
+
+# Définition des tests à faire
+jobs:
+  build-and-push-docker-image:
+    if: github.ref=='refs/heads/master'
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      - name: Login to DockerHub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./backend
+          tags: ${{secrets.DOCKER_USERNAME}}/backend:latest
+          push: true
+
+      - name: Build and push database image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./database
+          tags: ${{secrets.DOCKER_USERNAME}}/database:latest
+          push: true
+
+      - name: Build and push httpd image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./httpd
+          tags: ${{secrets.DOCKER_USERNAME}}/httpd:latest
+          push: true
