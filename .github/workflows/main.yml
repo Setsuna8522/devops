@@ -1,0 +1,29 @@
+name: devops-CI
+
+on: # lancement des tests à chaque push/pull sur les branches main et develop
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+# Définition des tests à faire
+jobs:
+  test-backend: # tests sur le backend
+    runs-on: ubuntu-22.04 # les tests se lancent sur une machine virtuelle ubuntu
+    
+    steps:
+      # Clone du code sur le runner pour le compiler et le tester
+      - uses: actions/checkout@v2.5.0
+
+      # Mise en place de l'environnement JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Compilation de l'application avec Maven
+      - name: Build and test with Maven
+        run: mvn -f ./backend/pom.xml clean install

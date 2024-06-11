@@ -1,0 +1,55 @@
+version: '3.7'
+
+# Lancement des différents services
+services:
+    backend:
+        build: ./backend # construction du service backend qui va être lancé
+        container_name: spring-app # nom du container qui va l'abriter
+        networks:
+          - app-network # ajout du réseau pour la communication avec les autres services
+        ports:
+          - "8080:8080" # port sur lequel tourne le backend
+        depends_on:
+          - database # le backend fait des requêtes à la base de données, donc il en dépend
+
+    database:
+        build: ./database # construction du service base de données
+        container_name: postgres-database # précision de son nom
+        networks:
+          - app-network # ajout au même réseau que le backend
+        environment: # ajout des variables d'environnement de la base de données, pour ne pas l'avoir dans dockerfile
+          POSTGRES_DB: db
+          POSTGRES_USER: usr
+          POSTGRES_PASSWORD: pwd
+        volumes:
+          - volume-database:/var/lib/postgresql/data # ajout du volume pour la persistence des données
+        ports:
+          - "5432:5432"  # port sur lequel tourne la base de données
+        depends_on:
+          - adminer # dépendance vis à vis de l'administrateur de données
+    
+    adminer:
+        image: adminer # utilisation de l'image officielle
+        container_name: adminer # précision de son nom
+        ports:
+          - "8090:8080" # port sur lequel tourne adminer
+        networks:
+          - app-network # ajout au même réseau que le backend et la base de données
+
+    httpd:
+        build: ./httpd # construction du service de serveur HTTPD
+        container_name: server-proxy # précision de son nom
+        ports:
+          - "80:80" # port sur lequel tourne le serveur
+        networks:
+          - app-network # ajout au même réseau que le reste
+        depends_on:
+          - backend # dépendance du backend pour avoir un site fonctionnel
+
+# Création des réseaux
+networks:
+    app-network: # création du réseau app-network
+
+# Création des volumes
+volumes:
+  volume-database: # création du volume volume-database
