@@ -32,6 +32,15 @@ jobs:
           tags: ${{secrets.DOCKER_USERNAME}}/backend:latest
           push: true
 
+      # Compilation et publication de l'image frontend que sur la branche main
+      - name: Build and push frontend image
+        if: github.ref=='refs/heads/main'
+        uses: docker/build-push-action@v3
+        with:
+          context: ./frontend
+          tags: ${{secrets.DOCKER_USERNAME}}/frontend:latest
+          push: true
+
       # Compilation et publication de l'image database que sur la branche main
       - name: Build and push database image
         if: github.ref=='refs/heads/main'

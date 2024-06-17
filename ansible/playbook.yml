@@ -8,5 +8,6 @@
   - volume # création du volume pour la persistence des données
   - adminer # lance l'administrateur de base de données
   - database # lance la base de données
-  - backend # lance l'application
+  - backend # lance le backend de l'application
+  - frontend # lance le frontend de l'application
   - httpd # lance le proxy

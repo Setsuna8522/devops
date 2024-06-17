@@ -1,0 +1,13 @@
+---
+# tasks file for ansible/roles/frontend
+- name: Launch Frontend # nom de la tâche
+  docker_container: # lancement de l'image du frontend avec différentes configurations
+    name: app-front
+    image: setsuna8522/frontend:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - name: app-network
+    state: started
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3
