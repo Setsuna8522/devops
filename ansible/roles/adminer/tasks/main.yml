@@ -1,0 +1,13 @@
+---
+# tasks file for ansible/roles/adminer
+- name: Launch Adminer # nom de la tâche
+  docker_container: # lancement de l'image de l'administrateur avec différentes configurations
+    name: adminer
+    image: adminer
+    ports:
+      - "8090:8080"
+    networks:
+      - name: app-network
+    state: started
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3

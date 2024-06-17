@@ -133,9 +133,61 @@ Voir `./.github/workflows/master-develop.yml` et `./.github/workflows/only-maste
 
 
 ## Quality Gate
-- Configuration
+- Configuration :
     - bug : pas d'ajout de nouveaux bugs
     - sécurité : pas de nouvelles vulnérabilités
     - maintenabilités : quantité limité de dette technique
     - couverture : les tests couvrent 80% du code
     - duplication : moins de 3% de lignes dupliquées
+
+
+# TP3
+Se remettre à la racine du projet, un niveau au dessus du répertoire `ansible/`.
+
+## Inventory
+Voir `./ansible/inventories/setup.yml`.
+
+
+## Base commands
+- Pour obtenir les informations sur les facts
+    - `sudo ansible all -i ansible/inventories/setup.yml -m setup -a "filter=ansible_distribution*"`
+    - `-m` précise le nom du module qui va être appelé
+        - `setup` permet de rassembler les informations sur la distribution OS
+    - `-a` ajoute des options
+        - `"filter=ansible_distribution"` est une option pour limiter les informations cherchées à la distribution ansible
+
+- Pour enlever le serveur Apache installé
+    - `sudo ansible all -i ansible/inventories/setup.yml -m yum -a "name=httpd state=absent" --become`
+    - `-m yum` sert à appeler le module `yum` pour gérer les paquets
+    - `-a "name=httpd state=absent"` précise l'option pour enlever le paquet `httpd`
+    - `--become` est utilisé pour lancer les commandes ansible comme un super utilisateur
+
+
+## Playbook
+Voir `./ansible/playbook.yml` et `./ansible/roles/docker/tasks/main.yml`.
+
+- Pour créer le rôle `docker`
+    - `ansible-galaxy init ansible/roles/docker`
+- Pour lancer les tâches
+    - `sudo ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml`
+
+
+## Déploiement de l'application
+Voir les fichiers `ansible/roles/*/tasks/main.yml`.
+
+- Pour créer les autres rôles :
+    - `ansible-galaxy init ansible/roles/network`
+    - `ansible-galaxy init ansible/roles/volume`
+    - `ansible-galaxy init ansible/roles/backend`
+    - `ansible-galaxy init ansible/roles/adminer`
+    - `ansible-galaxy init ansible/roles/database`
+    - `ansible-galaxy init ansible/roles/httpd`
+- Pour lancer les tâches
+    - `sudo ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml`
+
+
+## Front
+
+
+
+## Continuous Deployment

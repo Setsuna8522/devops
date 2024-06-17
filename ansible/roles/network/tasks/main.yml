@@ -1,0 +1,8 @@
+---
+# tasks file for ansible/roles/network
+- name: Create Docker network # nom de la tâche
+  docker_network: # lancement du network
+    name: app-network
+    state: present
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3

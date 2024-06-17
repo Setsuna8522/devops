@@ -1,0 +1,12 @@
+- hosts: all # groupe sur lequel lancer les tests
+  gather_facts: false # désactive la collecte d'informations, ping n'en a pas besoin
+  become: true # exécuter en tant que super utilisateur
+
+  roles: # rôles à lancer
+  - docker # installation de Docker
+  - network # création du network
+  - volume # création du volume pour la persistence des données
+  - adminer # lance l'administrateur de base de données
+  - database # lance la base de données
+  - backend # lance l'application
+  - httpd # lance le proxy

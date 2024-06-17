@@ -2,6 +2,14 @@ version: '3.7'
 
 # Lancement des différents services
 services:
+    frontend:
+        build: ./frontend # construction du service frontend qui va être lancé
+        container_name: app-front # nom du container qui va l'abriter
+        networks:
+          - app-network # ajout du réseau pour la communication avec les autres services
+        ports:
+          - "3000:3000" # port sur lequel tourne le frontend
+
     backend:
         build: ./backend # construction du service backend qui va être lancé
         container_name: spring-app # nom du container qui va l'abriter

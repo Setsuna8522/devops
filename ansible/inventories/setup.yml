@@ -1,0 +1,7 @@
+all: # groupe qui contient toutes les machines
+  vars: # définition des variables globales
+    ansible_user: centos # utilisateur ssh pour exécuter les commandes ansible
+    ansible_ssh_private_key_file: ansible/id_rsa # clef ssh pour permettre la connexion au serveur
+  children: # groupe de machines sur lequel lancer les commandes
+    prod: # nom du groupe
+      hosts: shana01112000.takima.cloud # serveur du groupe

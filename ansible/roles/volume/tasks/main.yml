@@ -1,0 +1,8 @@
+---
+# tasks file for ansible/roles/volume
+- name: Create volume for database persistence # nom de la tâche
+  docker_volume: # création du volume
+    name: volume-database
+    state: present
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3

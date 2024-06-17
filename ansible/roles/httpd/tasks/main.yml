@@ -1,0 +1,13 @@
+---
+# tasks file for ansible/roles/httpd
+- name: Launch HTTPD # nom de la tâche
+  docker_container: # lancement de l'image proxy avec différentes configurations
+    name: server-proxy
+    image: setsuna8522/httpd:latest
+    ports:
+      - "80:80"
+    networks:
+      - name: app-network
+    state: started
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3

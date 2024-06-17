@@ -1,0 +1,19 @@
+---
+# tasks file for ansible/roles/database
+- name: Launch Database # nom de la tâche
+  docker_container: # lancement de l'image de la base de données avec différentes configurations
+    name: postgres-database
+    image: setsuna8522/database:latest
+    env:
+      POSTGRES_DB: db
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+    networks:
+      - name: app-network
+    volumes:
+      - volume-database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    state: started
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3
