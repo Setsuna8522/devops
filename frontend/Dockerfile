@@ -16,3 +16,6 @@ FROM nginx:1.15.7-alpine
 
 COPY --from=build /opt/front/dist /usr/share/nginx/html/
 COPY --from=build /opt/front/default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
