@@ -187,7 +187,7 @@ Voir les fichiers `ansible/roles/*/tasks/main.yml`.
 
 
 ## Front
-
+Voir sur le port 3000.
 
 
 ## Continuous Deployment
