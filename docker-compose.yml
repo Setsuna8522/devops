@@ -3,7 +3,7 @@ version: '3.7'
 # Lancement des différents services
 services:
     backend:
-        build: ./backend # construction du service backend qui va être lancé
+        image: setsuna8522/backend # construction du service backend qui va être lancé
         container_name: spring-app # nom du container qui va l'abriter
         networks:
           - app-network # ajout du réseau pour la communication avec les autres services
@@ -13,7 +13,7 @@ services:
           - database # le backend fait des requêtes à la base de données, donc il en dépend
     
     frontend:
-        build: ./frontend # construction du service frontend qui va être lancé
+        image: setsuna8522/frontend # construction du service frontend qui va être lancé
         container_name: app-front # nom du container qui va l'abriter
         networks:
           - app-network # ajout du réseau pour la communication avec les autres services
@@ -21,7 +21,7 @@ services:
           - "3000:3000" # port sur lequel tourne le frontend
 
     database:
-        build: ./database # construction du service base de données
+        image: setsuna8522/database # construction du service base de données
         container_name: postgres-database # précision de son nom
         networks:
           - app-network # ajout au même réseau que le backend
@@ -45,7 +45,7 @@ services:
           - app-network # ajout au même réseau que le backend et la base de données
 
     httpd:
-        build: ./httpd # construction du service de serveur HTTPD
+        image: setsuna8522/httpd # construction du service de serveur HTTPD
         container_name: server-proxy # précision de son nom
         ports:
           - "80:80" # port sur lequel tourne le serveur

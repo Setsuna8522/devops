@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Restart backend
+      service:
+        name: spring-app
+        state: restarted

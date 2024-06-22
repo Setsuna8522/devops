@@ -1,0 +1,42 @@
+name: Deploy Application
+
+# Lancement des tests à chaque push/pull sur les branches main et develop
+on:
+  push:
+    branches:
+      - production
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04 # les tests se lancent sur une machine virtuelle ubuntu
+    steps:
+      # Clone du code sur le runner pour le compiler et le tester
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build Docker image
+        run: docker build . -t ansible-deploy
+
+      - name: Run Ansible Playbook
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        run: |
+          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > vault_pass.txt
+          docker run --rm \
+            -v $(pwd)/vault_pass.txt:/vault_pass.txt \
+            -v ~/.ssh:/root/.ssh \
+            ansible-deploy \
+            ansible-playbook deploy.yml --vault-password-file /vault_pass.txt
