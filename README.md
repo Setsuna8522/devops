@@ -141,6 +141,7 @@ Voir `./.github/workflows/master-develop.yml` et `./.github/workflows/only-maste
     - duplication : moins de 3% de lignes dupliquées
 
 
+
 # TP3
 Se remettre à la racine du projet, un niveau au dessus du répertoire `ansible/`.
 
@@ -187,7 +188,24 @@ Voir les fichiers `ansible/roles/*/tasks/main.yml`.
 
 
 ## Front
-Voir sur le port 3000.
+Voir le site sur le port 3000.
 
 
 ## Continuous Deployment
+Voir `.github/workflows/deploy.yml` (pipeline pour créer l'image Docker Ansible), `ansible/deploy.yml` (playbook pour relancer le backend), `ansible/Dockerfile` (image Docker pour lancer les playbook)
+
+- Pour chiffrer la clef ssh 
+    - `ansible-vault encrypt ansible/.ssh/id_rsa`
+
+
+
+# TP extras
+## Redundancy
+
+
+
+## Load balancing
+
+
+
+## Grafana

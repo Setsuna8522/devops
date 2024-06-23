@@ -2,13 +2,23 @@ version: '3.7'
 
 # Lancement des différents services
 services:
-    backend:
+    backend-blue:
         image: setsuna8522/backend # construction du service backend qui va être lancé
-        container_name: spring-app # nom du container qui va l'abriter
+        container_name: spring-app-blue # nom du container qui va l'abriter
         networks:
           - app-network # ajout du réseau pour la communication avec les autres services
         ports:
           - "8080:8080" # port sur lequel tourne le backend
+        depends_on:
+          - database # le backend fait des requêtes à la base de données, donc il en dépend
+    
+    backend-green:
+        image: setsuna8522/backend # construction du service backend qui va être lancé
+        container_name: spring-app-green # nom du container qui va l'abriter
+        networks:
+          - app-network # ajout du réseau pour la communication avec les autres services
+        ports:
+          - "8081:8080" # port sur lequel tourne le backend
         depends_on:
           - database # le backend fait des requêtes à la base de données, donc il en dépend
     
@@ -52,7 +62,8 @@ services:
         networks:
           - app-network # ajout au même réseau que le reste
         depends_on:
-          - backend # dépendance du backend pour avoir un site fonctionnel
+          - backend-blue # dépendance du backend pour avoir un site fonctionnel
+          - backend-green # dépendance du backend pour avoir un site fonctionnel
 
 # Création des réseaux
 networks:

@@ -1,11 +1,23 @@
 ---
 # tasks file for ansible/roles/backend
-- name: Launch Backend # nom de la tâche
+- name: Launch Backend Blue # nom de la tâche
   docker_container: # lancement de l'image du backend avec différentes configurations
-    name: spring-app
+    name: spring-app-blue
     image: setsuna8522/backend:latest
     ports:
       - "8080:8080"
+    networks:
+      - name: app-network
+    state: started
+  vars: # chemin vers Python
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Launch Backend Green # nom de la tâche
+  docker_container: # lancement de l'image du backend avec différentes configurations
+    name: spring-app-green
+    image: setsuna8522/backend:latest
+    ports:
+      - "8081:8080"
     networks:
       - name: app-network
     state: started
