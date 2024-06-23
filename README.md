@@ -205,4 +205,5 @@ On crée deux serveurs backend dans le docker-compose pour le lancer en local, e
 
 
 ## Load balancing
-Remplacer `./frontend/.env.production:VUE_APP_API_URL=localhost:8080` par `VUE_APP_API_URL=/api/`
+On ajoute les modules d'équilibrage de charge et les configurations dans `./httpd/httpd.conf`.
+Remplacer `./frontend/.env.production:VUE_APP_API_URL=localhost:8080` par `VUE_APP_API_URL=/api/`.
